@@ -1,0 +1,20 @@
+{
+  "name": "headline-madlibs",
+  "version": "1.0.0",
+  "description": "Madlib generator using 2020 New York Times headlines",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"test\"",
+    "dev": "nodemon index.js"
+  },
+  "keywords": [
+    "art"
+  ],
+  "author": "Anthony Warnick",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1",
+    "rss-parser": "^3.9.0",
+    "wink-pos-tagger": "^2.2.2"
+  }
+}
