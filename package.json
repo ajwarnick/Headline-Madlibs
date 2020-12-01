@@ -16,5 +16,8 @@
     "express": "^4.17.1",
     "rss-parser": "^3.9.0",
     "wink-pos-tagger": "^2.2.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.6"
   }
 }

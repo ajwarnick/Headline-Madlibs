@@ -27,8 +27,6 @@ let allFilled = () => {
     let r = false;
     let form = document.querySelectorAll('form');
     let filled = document.querySelectorAll('form.filled');
-    console.log(form);
-    console.log(filled);
     if(form.length == filled.length){
         r = true;
     }

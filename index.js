@@ -18,6 +18,14 @@ app.get('/', async (req, res) => {
     res.send(html(puncher(title)));
 })
 
+app.get('/print/', async (req, res) => {
+    let title = await getTitles();
+    // let title = "Early Data Show Moderna’s Coronavirus Vaccine Is 94.5% Effective";
+    title = title.replace(/[\u2018\u2019]/g, "'")   // smart single quotes
+                   .replace(/[\u201C\u201D]/g, '"');  // smart double quotes
+    res.send(print(puncher(title)));
+})
+
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
 })
@@ -134,11 +142,13 @@ const builder = (arr) => {
     arr.forEach((item,index) => {
         let label, replace;
 
+        // DEAL WITH COMMAS ETC IN THE STRING
+
         if( item.pos != "TO" && item.pos != "SYM" && item.pos != "LS" && item.pos != "CC" && item.pos != "DT" && item.pos != "EX"){
             if(item.pos == "POS" || (arr[index+1] && arr[index+1].pos == "POS")){
                 if(item.pos == "POS"){
                     replace = arr[index-1].value + item.value;
-                    label = pos[arr[index-1].pos];;
+                    label = pos[arr[index-1].pos];
                 }
             }else{
                 replace = item.value;
@@ -168,8 +178,8 @@ const getTitles = async () => {
     let doc = await parser.parseURL(feed);
 
     var titles = doc.items.map((item) => item.title );
-
-    return titles[0];
+    var ran = probability(0, titles.length);
+    return titles[ran];
 }
 
 const html = (content) =>{
@@ -185,6 +195,8 @@ const html = (content) =>{
 			Artist: Anthony Warnick
 			Date: November 30, 2020
             -->
+            <link rel="preconnect" href="https://fonts.gstatic.com">
+            <link href="https://fonts.googleapis.com/css2?family=Yatra+One&display=swap" rel="stylesheet">
             <link rel="stylesheet" href="css/style.css">
         </head>
         <body class="">
@@ -192,6 +204,35 @@ const html = (content) =>{
                 ${content}
             </div>
             <script src="js/script.js"></script>
+        </body>
+        </html>`
+}
+
+const print = (content) => {
+    return `
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Madlib (2020) - Anthony Warnick</title>
+            <!-- 
+			Title: Madlib
+			Artist: Anthony Warnick
+			Date: November 30, 2020
+            -->
+
+            <!--
+            <link rel="preconnect" href="https://fonts.gstatic.com">
+            <link href="https://fonts.googleapis.com/css2?family=Yatra+One&display=swap" rel="stylesheet">
+            -->
+            <link rel="stylesheet" href="/css/style.css">
+        </head>
+        <body class="print">
+            <div class="madlib">
+                ${content}
+            </div>
+            <script src="/js/script.js"></script>
         </body>
         </html>`
 }
