@@ -146,7 +146,7 @@ const builder = (arr) => {
             }    
         }
 
-        if(replace){
+        if(replace && label){
             let id = 'word_' + index;
             let html = `<form><label for="${id}">${label}</label><input type="text" id="${id}" name="${id}"><span></span></form>`
 
@@ -179,7 +179,12 @@ const html = (content) =>{
         <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Document</title>
+            <title>Madlib (2020) - Anthony Warnick</title>
+            <!-- 
+			Title: Madlib
+			Artist: Anthony Warnick
+			Date: November 30, 2020
+            -->
             <link rel="stylesheet" href="css/style.css">
         </head>
         <body class="">
