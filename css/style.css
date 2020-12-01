@@ -32,7 +32,35 @@ body.filled{
     width: 60vw;
     margin: auto;
     padding-bottom: 1rem;
+
+    animation-duration: 5s;
+    /* animation-name: fontflip; */
+    animation-iteration-count: infinite;
+
+    font-family: 'Texturina', serif;
 }
+
+@keyframes fontflip {
+    0%{
+        font-weight: 100;
+    }
+
+    25%{
+        font-weight: 900;
+    }
+  
+    50%{
+        font-weight: 200;
+    }
+
+    75%{
+        font-weight: 600;
+    }
+
+    100%{
+        font-weight: 300;
+    }
+  }
 
 label {
     position: absolute;
@@ -90,3 +118,22 @@ span {
 .filled label{
     color:black;
 }
+
+
+@media print {
+
+    @page {
+        size: 5.5in 8.5in;
+    }
+      
+    html{
+        /* width: 297mm;
+        height: 420mm; */
+    }
+
+    .madlib {
+        font-family:georgia, times, serif;
+        font-size: 10pt;
+        border: 5px solid green;
+    }
+ }
