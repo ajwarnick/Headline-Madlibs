@@ -1,1 +1,1 @@
-a
+![example of madlib](/img/example.png)
