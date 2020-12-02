@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Texturina:ital,wght@0,100;0,200;0,300;0,600;0,900;1,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <script>
+        let url = "http://localhost:3000/api/";
+        const htmlGenerator = ( arr, s) => {
+            let html = arr;
+            let res = s.split(" ");
+
+            html.forEach((item) => { 
+                const index = res.findIndex((el) => el.toLowerCase().includes( item.replace ) );
+                res[index] = item.html; 
+            })
+
+            return res.join(' ');
+        }
+
+        const appendToBody = (html) => {
+            console.log(html);
+            let div = document.createElement('div');
+            div.classList.add('madlib');
+            div.innerHTML = html;
+            document.body.appendChild(div);
+        }
+
+        fetch(url).then(r => r.json())
+            .then(data => htmlGenerator(data.punched, data.title))
+            .then(html => appendToBody(html))
+            .catch(e => console.log("Booo"))
+    </script>
+    <script src="../js/script.js"></script>
+</body>
+</html>

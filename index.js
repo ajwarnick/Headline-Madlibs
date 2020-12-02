@@ -15,19 +15,28 @@ app.get('/', async (req, res) => {
     // let title = "Early Data Show Moderna’s Coronavirus Vaccine Is 94.5% Effective";
     title = title.replace(/[\u2018\u2019]/g, "'")   // smart single quotes
                    .replace(/[\u201C\u201D]/g, '"');  // smart double quotes
-    res.send(html(puncher(title)));
+    res.send(html(htmlGenerator( puncher(title), title )));
 })
 
 app.get('/print/', async (req, res) => {
     let title = await getTitles();
-    // let title = "Early Data Show Moderna’s Coronavirus Vaccine Is 94.5% Effective";
+
     title = title.replace(/[\u2018\u2019]/g, "'")   // smart single quotes
                    .replace(/[\u201C\u201D]/g, '"');  // smart double quotes
-    res.send(print(puncher(title)));
+    res.send(print(htmlGenerator( puncher(title), title )));
+})
+
+app.get('/api/', async (req, res) => {
+    let title = await getTitles();
+
+    title = title.replace(/[\u2018\u2019]/g, "'")   // smart single quotes
+                   .replace(/[\u201C\u201D]/g, '"');  // smart double quotes
+
+    res.send({punched: puncher(title), title: title});
 })
 
 app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`);
+  console.log(`Madlib listening at http://localhost:${port}`);
 })
 
 const puncher = (s) => {
@@ -85,15 +94,17 @@ const puncher = (s) => {
         }
     }
 
-    let html = builder( punched );
-    let res = s.split(" ");
+    return builder( punched );
 
-    html.forEach((item) => { 
-        const index = res.findIndex((el) => el.toLowerCase().includes( item.replace ) );
-        res[index] = item.html; 
-    })
+    // let html = builder( punched );
+    // let res = s.split(" ");
 
-    return res.join(' ');
+    // html.forEach((item) => { 
+    //     const index = res.findIndex((el) => el.toLowerCase().includes( item.replace ) );
+    //     res[index] = item.html; 
+    // })
+
+    // return res.join(' ');
 }
 
 const builder = (arr) => {
@@ -162,6 +173,7 @@ const builder = (arr) => {
 
             r.push({
                 replace: replace,
+                label: label,
                 html: html
             })
         }
@@ -169,7 +181,6 @@ const builder = (arr) => {
 
     return r;
 }
-
 
 const probability = (l,h) => Math.floor(Math.random() * ((Math.floor(h) + 1) - Math.ceil(l)) + Math.ceil(l));
 
@@ -180,6 +191,18 @@ const getTitles = async () => {
     var titles = doc.items.map((item) => item.title );
     var ran = probability(0, titles.length);
     return titles[ran];
+}
+
+const htmlGenerator = ( arr, s) => {
+    let html = arr;
+    let res = s.split(" ");
+
+    html.forEach((item) => { 
+        const index = res.findIndex((el) => el.toLowerCase().includes( item.replace ) );
+        res[index] = item.html; 
+    })
+
+    return res.join(' ');
 }
 
 const html = (content) =>{
