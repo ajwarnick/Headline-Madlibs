@@ -107,3 +107,5 @@ dist
 # Mine
 pdf/
 printGenerator.sh
+
+.vercel
