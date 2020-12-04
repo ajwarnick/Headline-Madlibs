@@ -199,7 +199,8 @@ const htmlGenerator = ( arr, s) => {
 
     html.forEach((item) => { 
         const index = res.findIndex((el) => el.toLowerCase().includes( item.replace ) );
-        res[index] = item.html; 
+        let regEx = new RegExp(item.replace, "ig");
+        res[index] = res[index].replace(regEx, item.html); 
     })
 
     return res.join(' ');
