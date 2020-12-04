@@ -144,6 +144,55 @@ span {
 } */
 
 
+
+
+@media (max-width: 668px) {
+    body{
+        line-height: 1.7rem;
+    }
+    label{
+        top: 1.5rem;
+
+    }
+    input[type=text] {
+        max-height: 1rem;
+        display: inline-block;
+    }
+}
+
+
+@media screen and (min-width: 668px) and (max-width: 768px) {
+    html, body{
+        line-height: 2rem;
+        font-size: 56px;
+    }
+    label{
+        top: 1.7rem;
+
+    }
+    input[type=text] {
+        max-height: 1rem;
+        display: inline-block;
+    }
+}
+
+@media screen and (min-width: 769px) and (max-width: 1025px) {
+    html, body{
+        line-height: 1.9rem;
+        font-size: 56px;
+    }
+    label{
+        top: 1.6rem;
+
+    }
+    input[type=text] {
+        max-height: 1rem;
+        display: inline-block;
+    }
+}
+
+
+
 @media print {
 
     @page {
@@ -161,7 +210,6 @@ span {
         width: 6in;
         margin: auto;
         margin-top: 2.5in;
-        /* border: 5px solid green; */
     }
 
     label {
