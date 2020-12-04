@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Madlib (2020) - Anthony Warnick</title>
+    <!-- 
+    Title: Madlib
+    Artist: Anthony Warnick
+    Date: November 30, 2020
+    -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Texturina:ital,wght@0,100;0,200;0,300;0,600;0,900;1,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <script>
+
+        // if print in display == print
+        // http://localhost:3000/demo/api.html?display=print
+        const urlParams = new URLSearchParams(window.location.search);
+        if(urlParams.get('display')){
+            document.body.classList.add(urlParams.get('display'));
+        }
+
+        
+        let url = "http://localhost:3000/api/";
+        const htmlGenerator = ( arr, s) => {
+            let html = arr;
+            let res = s.split(" ");
+
+            html.forEach((item) => { 
+                const index = res.findIndex((el) => el.toLowerCase().includes( item.replace ) );
+                res[index] = item.html; 
+            })
+
+            return res.join(' ');
+        }
+
+        const appendToBody = (html) => {
+            let div = document.createElement('div');
+            div.classList.add('madlib');
+            div.innerHTML = html;
+            document.body.appendChild(div);
+            formInit();
+        }
+
+        let formInit = () => {
+            const forms = document.getElementsByTagName("form");
+            for (let form of forms) {
+                const input = form.querySelector('input');
+                input.value = '';
+                const span = form.querySelector('span');
+                input.addEventListener('input', function (event) {
+                    span.innerHTML = this.value.replace(/\s/g, '&nbsp;');
+                    this.style.width = span.clientWidth + 'px';
+                    this.parentElement.classList.remove("filled");
+                    if(span.innerHTML.trim() !== ""){
+                        this.parentElement.classList.add("filled");
+                    }
+                });
+
+                input.addEventListener('focusout', (event) => {
+                    if(allFilled()){
+                        document.body.classList.add("complete");
+                        trimWidths();
+                    }else{
+                        document.body.classList.remove("complete");
+                    }
+                });
+            }
+        }   
+
+        let allFilled = () => {
+            let r = false;
+            let form = document.querySelectorAll('form');
+            let filled = document.querySelectorAll('form.filled');
+            if(form.length == filled.length){
+                r = true;
+            }
+
+            return r;
+        }
+
+        let trimWidths = () => {
+            const forms = document.getElementsByTagName("form");
+            for (let form of forms) {
+                const input = form.querySelector('input');
+                const span = form.querySelector('span');
+                span.style.minWidth = "auto"; 
+
+                input.style.width = span.clientWidth + "px";
+                input.disabled = true;
+            }
+        }
+
+        fetch(url).then(r => r.json())
+            .then(data => htmlGenerator(data.punched, data.title))
+            .then(html => appendToBody(html))
+            .catch(e => console.log("Booo"))
+    </script>
+</body>
+</html>
