@@ -109,3 +109,4 @@ pdf/
 printGenerator.sh
 
 .vercel
+.DS_Store

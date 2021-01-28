@@ -10,12 +10,11 @@
     Date: November 30, 2020
     -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Texturina:ital,wght@0,100;0,200;0,300;0,600;0,900;1,600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Yatra+One&display=swap" rel="stylesheet"> 
     <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
     <script>
-
         // if print in display == print
         // http://localhost:3000/demo/api.html?display=print
         const urlParams = new URLSearchParams(window.location.search);
@@ -24,7 +23,9 @@
         }
 
         
-        let url = "http://localhost:3000/api/";
+        // let url = "http://localhost:3000/api/";
+        let url = "https://madllib.vercel.app/api/";
+        
         const htmlGenerator = ( arr, s) => {
             let html = arr;
             let res = s.split(" ");
